@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import { actualites } from '../../data/mockData';
-import { Calendar, Tag, ChevronRight, Search, Clock } from 'lucide-react';
+import { Calendar, Tag, ChevronRight, Search, Clock, Building2 } from 'lucide-react';
 
 const allActualites = [
-  ...actualites,
-  { id: 5, titre: 'Compétition inter-écoles de mathématiques', resume: 'Nos élèves ont brillé lors de la compétition inter-écoles avec 3 médailles d\'or et 5 médailles d\'argent.', date: '2026-02-25', image: null, categorie: 'Académique' },
-  { id: 6, titre: 'Cérémonie de remise des prix du 1er trimestre', resume: 'Les meilleurs élèves de chaque établissement ont été récompensés lors d\'une cérémonie solennelle.', date: '2026-02-20', image: null, categorie: 'Événement' },
-  { id: 7, titre: 'Lancement du programme de mentorat numérique', resume: 'Un nouveau programme de mentorat digital connecte nos élèves avec des professionnels de la tech.', date: '2026-02-15', image: null, categorie: 'Partenariat' },
-  { id: 8, titre: 'Semaine de la science dans nos écoles', resume: 'Du 10 au 14 février, nos établissements ont accueilli des ateliers scientifiques pour éveiller la curiosité de nos élèves.', date: '2026-02-10', image: null, categorie: 'Académique' },
+  ...actualites.map((a, i) => ({ ...a, etablissement: ['Les Palmiers', 'Les Cocotiers', 'Les Frangipaniers', 'Le Guide'][i % 4] })),
+  { id: 5, titre: 'Compétition inter-écoles de mathématiques', resume: 'Nos élèves ont brillé lors de la compétition inter-écoles avec 3 médailles d\'or et 5 médailles d\'argent.', date: '2026-02-25', image: null, categorie: 'Académique', etablissement: 'Les Palmiers' },
+  { id: 6, titre: 'Cérémonie de remise des prix du 1er trimestre', resume: 'Les meilleurs élèves de chaque établissement ont été récompensés lors d\'une cérémonie solennelle.', date: '2026-02-20', image: null, categorie: 'Événement', etablissement: 'Les Cocotiers' },
+  { id: 7, titre: 'Lancement du programme de mentorat numérique', resume: 'Un nouveau programme de mentorat digital connecte nos élèves avec des professionnels de la tech.', date: '2026-02-15', image: null, categorie: 'Partenariat', etablissement: 'Le Guide' },
+  { id: 8, titre: 'Semaine de la science dans nos écoles', resume: 'Du 10 au 14 février, nos établissements ont accueilli des ateliers scientifiques pour éveiller la curiosité de nos élèves.', date: '2026-02-10', image: null, categorie: 'Académique', etablissement: 'Les Frangipaniers' },
 ];
 
 const categories = ['Toutes', 'Événement', 'Académique', 'Partenariat', 'Admissions'];
+const etablissementsList = ['Tous', 'Les Palmiers', 'Les Cocotiers', 'Les Frangipaniers', 'Le Guide'];
 
 export default function ActualitesPage() {
   const [selectedCat, setSelectedCat] = useState('Toutes');
+  const [selectedEtab, setSelectedEtab] = useState('Tous');
   const [search, setSearch] = useState('');
 
   const filtered = allActualites.filter(a => {
     if (selectedCat !== 'Toutes' && a.categorie !== selectedCat) return false;
+    if (selectedEtab !== 'Tous' && a.etablissement !== selectedEtab) return false;
     if (search && !a.titre.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
@@ -67,12 +70,23 @@ export default function ActualitesPage() {
       {/* Filters + Grid */}
       <section className="public-section" style={{ paddingTop: '0' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {categories.map(cat => (
-              <button key={cat} className={`btn btn-sm ${selectedCat === cat ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setSelectedCat(cat)}>
-                {cat}
-              </button>
-            ))}
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              {categories.map(cat => (
+                <button key={cat} className={`btn btn-sm ${selectedCat === cat ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setSelectedCat(cat)}>
+                  {cat}
+                </button>
+              ))}
+            </div>
+            <div style={{ width: '1px', height: '24px', background: '#e2e8f0' }} />
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <Building2 size={16} style={{ color: '#64748b' }} />
+              {etablissementsList.map(etab => (
+                <button key={etab} className={`btn btn-sm ${selectedEtab === etab ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setSelectedEtab(etab)}>
+                  {etab}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="search-input-wrap">
             <Search size={16} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { etablissements } from '../../data/mockData';
 import { MapPin, Phone, Mail, Users, GraduationCap, Calendar, Award, ChevronRight, Building2 } from 'lucide-react';
 
@@ -103,6 +104,10 @@ export default function NosEtablissementsPage() {
                       <Award size={14} style={{ color: '#1e3a5f', flexShrink: 0 }} /> Directeur : {etab.directeur}
                     </div>
                   </div>
+
+                  <Link to={`/nos-etablissements/${etab.id}`} className="btn btn-primary" style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                    Voir l'école <ChevronRight size={16} />
+                  </Link>
                 </div>
               </div>
             </div>

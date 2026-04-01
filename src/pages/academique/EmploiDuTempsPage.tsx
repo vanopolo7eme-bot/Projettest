@@ -3,6 +3,7 @@ import { emploiDuTemps, classes, matieres, enseignants } from '../../data/mockDa
 import { CalendarDays, ChevronLeft, ChevronRight, Plus, X, Trash2 } from 'lucide-react';
 import Modal from '../../components/ui/Modal';
 import { useToast } from '../../contexts/ToastContext';
+import { useAuth } from '../../contexts/AuthContext';
 import ExportDropdown from '../../components/ui/ExportDropdown';
 
 const JOURS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
@@ -21,12 +22,14 @@ const typeMap: Record<string, string> = {
 export default function EmploiDuTempsPage() {
   const [vue, setVue] = useState('semaine');
   const [selectedClasse, setSelectedClasse] = useState(1);
-  const [schedule, setSchedule] = useState(() => 
+  const [schedule, setSchedule] = useState(() =>
     emploiDuTemps.map((e, index) => ({ ...e, id: `event-${index}`, classeId: 1 }))
   );
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { showToast } = useToast();
+  const { user } = useAuth();
+  const isParent = user?.role === 'Parent';
 
   const [newEvent, setNewEvent] = useState({
     jour: 'Lundi', heure: '08:00', matiereId: matieres[0].id, enseignantId: enseignants[0].id, salle: ''
@@ -99,7 +102,7 @@ export default function EmploiDuTempsPage() {
           <select className="form-select" style={{ width: '200px' }} value={selectedClasse} onChange={e => setSelectedClasse(Number(e.target.value))}>
             {classes.map(c => <option key={c.id} value={c.id}>{c.nom}</option>)}
           </select>
-          <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}><Plus size={16} /> Nouveau cours</button>
+          {!isParent && <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}><Plus size={16} /> Nouveau cours</button>}
         </div>
       </div>
 
@@ -132,13 +135,13 @@ export default function EmploiDuTempsPage() {
                     <div key={`${j}-${h}`} className="timetable-cell" style={{ position: 'relative' }}>
                       {ev && (
                         <div className={`timetable-event ${ev.type}`} style={{ position: 'relative' }}>
-                          <button 
+                          {!isParent && <button
                             style={{ position: 'absolute', top: '4px', right: '4px', background: 'transparent', border: 'none', cursor: 'pointer', opacity: 0.6, padding: '2px' }}
                             onClick={() => handleDelete(ev.id, ev.matiere)}
                             title="Supprimer ce cours"
                           >
                             <Trash2 size={12} color="#000" />
-                          </button>
+                          </button>}
                           <div style={{ fontWeight: 700, marginBottom: '2px' }}>{ev.matiere}</div>
                           <div style={{ opacity: 0.7 }}>{ev.enseignant}</div>
                           <div style={{ opacity: 0.6 }}>{ev.salle}</div>

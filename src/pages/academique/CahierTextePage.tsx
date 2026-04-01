@@ -1,8 +1,12 @@
 import React from 'react';
 import { cahierTexte } from '../../data/mockData';
 import { BookOpen, Calendar, FileText, Clock } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function CahierTextePage() {
+  const { user } = useAuth();
+  const isParent = user?.role === 'Parent';
+
   return (
     <div className="fade-in">
       <div className="page-header">
@@ -11,9 +15,11 @@ export default function CahierTextePage() {
           <h1 className="page-title">Cahier de Texte</h1>
           <p className="page-subtitle">Leçons dispensées et devoirs — Terminale S</p>
         </div>
-        <div className="page-actions">
-          <button className="btn btn-primary"><BookOpen size={16} /> Ajouter une entrée</button>
-        </div>
+        {!isParent && (
+          <div className="page-actions">
+            <button className="btn btn-primary"><BookOpen size={16} /> Ajouter une entrée</button>
+          </div>
+        )}
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

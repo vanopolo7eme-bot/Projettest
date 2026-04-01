@@ -234,3 +234,166 @@ export const actualites = [
   { id: 3, titre: 'Nouveau partenariat avec Alliance Française', resume: 'Un accord de partenariat a été signé pour renforcer l\'enseignement du français.', date: '2026-03-05', image: null, categorie: 'Partenariat' },
   { id: 4, titre: 'Inscriptions 2026-2027 ouvertes', resume: 'Les pré-inscriptions pour l\'année scolaire 2026-2027 sont désormais ouvertes en ligne.', date: '2026-03-01', image: null, categorie: 'Admissions' },
 ];
+
+// ═══════════════════════════════════════════════════════
+// DONNÉES ENRICHIES — FONCTIONNALITÉS AVANCÉES CDC
+// ═══════════════════════════════════════════════════════
+
+export const historiqueScolaire = [
+  { eleveId: 1, annee: '2024-2025', classe: 'CE2-A', etablissement: 'Les Palmiers', moyenne: 14.5, rang: 3, effectif: 30, decision: 'Passage', mention: 'Bien' },
+  { eleveId: 1, annee: '2023-2024', classe: 'CE1-B', etablissement: 'Les Palmiers', moyenne: 13.8, rang: 5, effectif: 32, decision: 'Passage', mention: 'Assez bien' },
+  { eleveId: 1, annee: '2022-2023', classe: 'CP-A', etablissement: 'Les Palmiers', moyenne: 15.2, rang: 1, effectif: 28, decision: 'Passage', mention: 'Très bien' },
+  { eleveId: 2, annee: '2024-2025', classe: 'CE2-B', etablissement: 'Les Palmiers', moyenne: 12.1, rang: 12, effectif: 31, decision: 'Passage', mention: 'Passable' },
+  { eleveId: 2, annee: '2023-2024', classe: 'CE1-A', etablissement: 'Les Palmiers', moyenne: 11.5, rang: 15, effectif: 33, decision: 'Passage', mention: 'Passable' },
+  { eleveId: 5, annee: '2024-2025', classe: 'CM2-A', etablissement: 'Les Palmiers', moyenne: 16.3, rang: 1, effectif: 28, decision: 'Passage en 6ème', mention: 'Très bien' },
+  { eleveId: 5, annee: '2023-2024', classe: 'CM1-A', etablissement: 'Les Palmiers', moyenne: 15.8, rang: 2, effectif: 30, decision: 'Passage', mention: 'Très bien' },
+  { eleveId: 8, annee: '2024-2025', classe: '1ère S', etablissement: 'Lycée Le Guide', moyenne: 13.2, rang: 8, effectif: 25, decision: 'Passage', mention: 'Assez bien' },
+  { eleveId: 8, annee: '2023-2024', classe: '2nde A', etablissement: 'Lycée Le Guide', moyenne: 14.0, rang: 5, effectif: 30, decision: 'Passage', mention: 'Bien' },
+  { eleveId: 15, annee: '2024-2025', classe: '5ème-B', etablissement: 'Lycée Le Guide', moyenne: 9.8, rang: 22, effectif: 28, decision: 'Passage', mention: 'Insuffisant' },
+];
+
+export const infosMedicales = [
+  { eleveId: 1, groupeSanguin: 'A+', taille: '132 cm', poids: '28 kg', allergies: ['Arachides'], traitements: [], vaccins: ['BCG', 'DTP', 'ROR', 'Hépatite B'], medecinTraitant: 'Dr. Nzé Marie', telephoneMedecin: '+241 01 44 55 66', assurance: 'CNAMGS', numeroAssurance: 'CN-2025-00145', dateVisite: '2025-09-10', apte: true, observations: 'Allergie alimentaire aux arachides signalée — PAI en place' },
+  { eleveId: 7, groupeSanguin: 'O-', taille: '145 cm', poids: '38 kg', allergies: [], traitements: ['Ventoline (asthme léger)'], vaccins: ['BCG', 'DTP', 'ROR'], medecinTraitant: 'Dr. Obiang Paul', telephoneMedecin: '+241 01 55 66 77', assurance: 'CNAMGS', numeroAssurance: 'CN-2025-00289', dateVisite: '2025-09-12', apte: true, observations: 'Asthme léger — Ventoline à disposition à l\'infirmerie' },
+  { eleveId: 15, groupeSanguin: 'B+', taille: '160 cm', poids: '52 kg', allergies: ['Lactose'], traitements: [], vaccins: ['BCG', 'DTP', 'ROR', 'Hépatite B', 'Fièvre jaune'], medecinTraitant: 'Dr. Mba Sophie', telephoneMedecin: '+241 01 66 77 88', assurance: null, numeroAssurance: null, dateVisite: '2025-09-15', apte: true, observations: 'Intolérance au lactose' },
+  { eleveId: 3, groupeSanguin: 'AB+', taille: '128 cm', poids: '26 kg', allergies: [], traitements: [], vaccins: ['BCG', 'DTP', 'ROR', 'Hépatite B'], medecinTraitant: 'Dr. Nzé Marie', telephoneMedecin: '+241 01 44 55 66', assurance: 'CNAMGS', numeroAssurance: 'CN-2025-00201', dateVisite: '2025-09-11', apte: true, observations: 'RAS' },
+  { eleveId: 5, groupeSanguin: 'O+', taille: '155 cm', poids: '45 kg', allergies: [], traitements: [], vaccins: ['BCG', 'DTP', 'ROR', 'Hépatite B', 'Fièvre jaune'], medecinTraitant: 'Dr. Obiang Paul', telephoneMedecin: '+241 01 55 66 77', assurance: 'CNAMGS', numeroAssurance: 'CN-2025-00178', dateVisite: '2025-09-14', apte: true, observations: 'Élève en bonne santé' },
+];
+
+export const sanctions = [
+  { id: 1, eleveId: 15, date: '2026-02-10', type: 'Avertissement', motif: 'Bavardage excessif en cours de Mathématiques', auteur: 'M. Boussougou', gravite: 'Mineure', notifieParents: true },
+  { id: 2, eleveId: 15, date: '2026-01-20', type: 'Retenue', motif: 'Devoir non rendu à deux reprises consécutives', auteur: 'Mme Moussavou', gravite: 'Moyenne', notifieParents: true },
+  { id: 3, eleveId: 7, date: '2026-03-05', type: 'Avertissement', motif: 'Utilisation du téléphone en classe', auteur: 'M. Mboumba', gravite: 'Mineure', notifieParents: false },
+  { id: 4, eleveId: 2, date: '2025-12-15', type: 'Observation', motif: 'Manque de concentration en cours', auteur: 'Mme Essono', gravite: 'Mineure', notifieParents: false },
+  { id: 5, eleveId: 15, date: '2025-11-28', type: 'Exclusion temporaire', motif: 'Altercation avec un camarade dans la cour', auteur: 'Direction', gravite: 'Grave', notifieParents: true },
+];
+
+export const distinctions = [
+  { id: 1, eleveId: 1, date: '2025-12-20', type: 'Encouragements', trimestre: 'T1 2025-2026', motif: 'Résultats en progression constante' },
+  { id: 2, eleveId: 5, date: '2025-12-20', type: 'Félicitations', trimestre: 'T1 2025-2026', motif: 'Excellents résultats — 1er de la classe' },
+  { id: 3, eleveId: 5, date: '2025-06-30', type: 'Tableau d\'honneur', trimestre: 'T3 2024-2025', motif: 'Meilleur élève de l\'année scolaire' },
+  { id: 4, eleveId: 8, date: '2025-12-20', type: 'Encouragements', trimestre: 'T1 2025-2026', motif: 'Bonne participation en classe' },
+  { id: 5, eleveId: 3, date: '2025-12-20', type: 'Félicitations', trimestre: 'T1 2025-2026', motif: 'Très bons résultats généraux' },
+];
+
+export const echeanciers = [
+  { id: 1, familleId: 1, eleveId: 1, annee: '2025-2026', type: 'Scolarité', montantTotal: 750000, echeances: [
+    { numero: 1, montant: 250000, echeance: '2025-09-15', statut: 'Payé', datePaiement: '2025-09-10' },
+    { numero: 2, montant: 250000, echeance: '2025-12-15', statut: 'Payé', datePaiement: '2025-12-12' },
+    { numero: 3, montant: 250000, echeance: '2026-03-15', statut: 'En attente', datePaiement: null },
+  ]},
+  { id: 2, familleId: 5, eleveId: 5, annee: '2025-2026', type: 'Scolarité', montantTotal: 950000, echeances: [
+    { numero: 1, montant: 320000, echeance: '2025-09-15', statut: 'Payé', datePaiement: '2025-09-20' },
+    { numero: 2, montant: 315000, echeance: '2025-12-15', statut: 'Partiel', datePaiement: '2026-01-10', montantPaye: 200000 },
+    { numero: 3, montant: 315000, echeance: '2026-03-15', statut: 'Impayé', datePaiement: null },
+  ]},
+  { id: 3, familleId: 7, eleveId: 7, annee: '2025-2026', type: 'Scolarité', montantTotal: 950000, echeances: [
+    { numero: 1, montant: 320000, echeance: '2025-09-15', statut: 'Impayé', datePaiement: null },
+    { numero: 2, montant: 315000, echeance: '2025-12-15', statut: 'Impayé', datePaiement: null },
+    { numero: 3, montant: 315000, echeance: '2026-03-15', statut: 'Impayé', datePaiement: null },
+  ]},
+];
+
+export const paiements = [
+  { id: 1, factureId: 1, montant: 300000, date: '2025-09-10', methode: 'Mobile Money (MTN)', reference: 'MTN-2025-091078', recu: 'REC-2025-001' },
+  { id: 2, factureId: 1, montant: 300000, date: '2025-12-12', methode: 'Mobile Money (Airtel)', reference: 'AIR-2025-121234', recu: 'REC-2025-045' },
+  { id: 3, factureId: 2, montant: 750000, date: '2025-09-08', methode: 'Virement bancaire', reference: 'VIR-BGFI-2025-090812', recu: 'REC-2025-002' },
+  { id: 4, factureId: 5, montant: 300000, date: '2025-09-20', methode: 'Espèces', reference: 'ESP-2025-0920', recu: 'REC-2025-005' },
+  { id: 5, factureId: 5, montant: 200000, date: '2026-01-10', methode: 'Mobile Money (Orange)', reference: 'ORA-2026-011034', recu: 'REC-2026-010' },
+  { id: 6, factureId: 4, montant: 750000, date: '2025-09-05', methode: 'Carte bancaire', reference: 'CB-VISA-2025-0905', recu: 'REC-2025-004' },
+  { id: 7, factureId: 9, montant: 200000, date: '2025-08-28', methode: 'Mobile Money (MTN)', reference: 'MTN-2025-082856', recu: 'REC-2025-009' },
+  { id: 8, factureId: 12, montant: 150000, date: '2026-01-13', methode: 'Espèces', reference: 'ESP-2026-0113', recu: 'REC-2026-012' },
+];
+
+export const relances = [
+  { id: 1, familleId: 7, factureId: 7, type: 'J+7', date: '2026-01-22', canal: 'Email', statut: 'Envoyé', message: 'Rappel : la facture FAC-2026-007 de 950 000 FCFA est en attente de règlement.' },
+  { id: 2, familleId: 7, factureId: 7, type: 'J+15', date: '2026-01-30', canal: 'SMS', statut: 'Envoyé', message: 'URGENT : Votre facture FAC-2026-007 est en retard de 15 jours.' },
+  { id: 3, familleId: 7, factureId: 7, type: 'J+30', date: '2026-02-14', canal: 'Email + SMS', statut: 'Envoyé', message: 'DERNIER RAPPEL : La facture FAC-2026-007 est impayée depuis 30 jours.' },
+  { id: 4, familleId: 1, factureId: 10, type: 'J+7', date: '2026-02-08', canal: 'Email', statut: 'Envoyé', message: 'Rappel : la facture cantine FAC-2026-010 de 50 000 FCFA est en attente.' },
+  { id: 5, familleId: 5, factureId: 11, type: 'J+7', date: '2026-01-22', canal: 'Email', statut: 'Envoyé', message: 'Rappel de paiement pour la facture FAC-2026-011.' },
+];
+
+export const remisesFratrie = [
+  { id: 1, regle: '2 enfants inscrits', pourcentage: 10, description: 'Remise de 10% sur la scolarité du 2ème enfant', active: true },
+  { id: 2, regle: '3 enfants ou plus', pourcentage: 15, description: 'Remise de 15% sur la scolarité à partir du 3ème enfant', active: true },
+  { id: 3, regle: 'Personnel de l\'école', pourcentage: 25, description: 'Remise de 25% pour les enfants du personnel', active: true },
+  { id: 4, regle: 'Boursier', pourcentage: 50, description: 'Bourse de 50% pour les élèves boursiers', active: true },
+];
+
+export const grillesFrais = [
+  { id: 1, type: 'Inscription', primaire: 150000, lycee: 200000, description: 'Frais d\'inscription annuels' },
+  { id: 2, type: 'Scolarité', primaire: 750000, lycee: 950000, description: 'Frais de scolarité annuels' },
+  { id: 3, type: 'Cantine', primaire: 50000, lycee: 60000, description: 'Frais de cantine mensuels' },
+  { id: 4, type: 'Transport', primaire: 150000, lycee: 180000, description: 'Frais de transport annuels' },
+  { id: 5, type: 'Activités extra-scolaires', primaire: 75000, lycee: 100000, description: 'Frais d\'activités optionnelles' },
+];
+
+export const configSysteme = {
+  anneeScolaireActive: { id: 1, label: '2025-2026', debut: '2025-09-08', fin: '2026-06-30', active: true },
+  anneesDisponibles: [
+    { id: 1, label: '2025-2026', debut: '2025-09-08', fin: '2026-06-30', active: true },
+    { id: 2, label: '2024-2025', debut: '2024-09-09', fin: '2025-06-28', active: false },
+    { id: 3, label: '2023-2024', debut: '2023-09-11', fin: '2024-06-29', active: false },
+  ],
+  periodesNotation: [
+    { id: 1, label: 'Trimestre 1', debut: '2025-09-08', fin: '2025-12-20', active: false, cloture: true },
+    { id: 2, label: 'Trimestre 2', debut: '2026-01-06', fin: '2026-03-28', active: true, cloture: false },
+    { id: 3, label: 'Trimestre 3', debut: '2026-04-14', fin: '2026-06-30', active: false, cloture: false },
+  ],
+  reglesPassage: [
+    { niveau: 'Primaire', moyenneMinimale: 10, redoublementMax: 1, decisionAuto: true },
+    { niveau: 'Collège', moyenneMinimale: 10, redoublementMax: 1, decisionAuto: false },
+    { niveau: 'Lycée', moyenneMinimale: 10, redoublementMax: 1, decisionAuto: false },
+  ],
+  formatMatricule: 'LGE-{AA}{NNNN}',
+  deviseParDefaut: 'FCFA',
+  fuseauHoraire: 'Africa/Libreville',
+  langueParDefaut: 'fr',
+};
+
+export const justificatifs = [
+  { id: 1, absenceId: 1, eleveId: 1, type: 'Certificat médical', fichier: 'certif_medical_obame.pdf', dateDepot: '2026-03-02', valide: true, validePar: 'Administration' },
+  { id: 2, absenceId: 5, eleveId: 8, type: 'Mot des parents', fichier: null, dateDepot: '2026-03-04', valide: true, validePar: 'Vie Scolaire', contenu: 'Boris avait un rendez-vous médical imprévu' },
+  { id: 3, absenceId: 12, eleveId: 15, type: 'En attente', fichier: null, dateDepot: null, valide: false, validePar: null },
+];
+
+export const alertesAbsenteisme = [
+  { id: 1, eleveId: 15, totalAbsences: 18, totalRetards: 5, periode: 'T1+T2', seuil: 15, statut: 'Critique', dateAlerte: '2026-03-10', notifieParents: true, notifieDirection: true },
+  { id: 2, eleveId: 7, totalAbsences: 12, totalRetards: 3, periode: 'T1+T2', seuil: 15, statut: 'Vigilance', dateAlerte: '2026-03-08', notifieParents: true, notifieDirection: false },
+  { id: 3, eleveId: 2, totalAbsences: 8, totalRetards: 7, periode: 'T1+T2', seuil: 15, statut: 'Vigilance', dateAlerte: '2026-03-05', notifieParents: false, notifieDirection: false },
+];
+
+export const conseilsClasse = [
+  { id: 1, classeId: 5, trimestre: 'T1', date: '2025-12-18', heureDebut: '14:00', heureFin: '16:30', president: 'Dr. François Obiang',
+    presents: ['M. Boussougou', 'Mme Moussavou', 'M. Mboumba', 'Dr. Nziengui', 'Mme Ayo', 'M. Lendoye', 'Déléguée parents: Mme Ndong', 'Délégué élèves: Boris Ndong'],
+    moyenneClasse: 12.8, moyenneMin: 6.5, moyenneMax: 17.2, mediane: 12.5, tauxReussite: 72,
+    decisions: [
+      { eleveId: 5, decision: 'Félicitations', commentaire: 'Excellent trimestre, continue ainsi' },
+      { eleveId: 15, decision: 'Avertissement travail', commentaire: 'Résultats insuffisants, manque de travail personnel' },
+      { eleveId: 6, decision: 'Encouragements', commentaire: 'Progression notable en mathématiques' },
+    ],
+    pvGenere: true, pvDate: '2025-12-19', observations: 'Classe dynamique mais hétérogène. Besoin de soutien pour les élèves en difficulté.'
+  },
+  { id: 2, classeId: 8, trimestre: 'T1', date: '2025-12-19', heureDebut: '09:00', heureFin: '11:00', president: 'Dr. François Obiang',
+    presents: ['Dr. Nziengui', 'Mme Moussavou', 'M. Boussougou', 'M. Lendoye', 'M. Mboumba', 'Déléguée parents: Mme Nze', 'Délégué élèves: Hervé Nze'],
+    moyenneClasse: 13.5, moyenneMin: 8.2, moyenneMax: 18.1, mediane: 13.8, tauxReussite: 84,
+    decisions: [
+      { eleveId: 8, decision: 'Encouragements', commentaire: 'Bon niveau général, peut mieux faire en français' },
+    ],
+    pvGenere: true, pvDate: '2025-12-20', observations: 'Bonne classe, niveau satisfaisant pour une Terminale S.'
+  },
+];
+
+export const appreciations = [
+  { eleveId: 1, matiereId: 1, trimestre: 1, enseignantId: 1, appreciation: 'Élève sérieux et appliqué. Continue tes efforts.' },
+  { eleveId: 1, matiereId: 2, trimestre: 1, enseignantId: 2, appreciation: 'Bon niveau en français. Travail régulier.' },
+  { eleveId: 1, matiereId: 3, trimestre: 1, enseignantId: 3, appreciation: 'Bons résultats en sciences. Participation active.' },
+  { eleveId: 5, matiereId: 1, trimestre: 1, enseignantId: 5, appreciation: 'Excellent élève, très bonne maîtrise des concepts.' },
+  { eleveId: 5, matiereId: 2, trimestre: 1, enseignantId: 6, appreciation: 'Très bon niveau. Expression écrite remarquable.' },
+  { eleveId: 15, matiereId: 1, trimestre: 1, enseignantId: 5, appreciation: 'Résultats insuffisants. Doit fournir plus d\'efforts.' },
+  { eleveId: 15, matiereId: 2, trimestre: 1, enseignantId: 6, appreciation: 'Niveau faible. Manque de travail personnel.' },
+  { eleveId: 8, matiereId: 1, trimestre: 1, enseignantId: 8, appreciation: 'Bon niveau, raisonnement logique solide.' },
+  { eleveId: 8, matiereId: 8, trimestre: 1, enseignantId: 5, appreciation: 'Très bonne compréhension des phénomènes physiques.' },
+  { eleveId: 3, matiereId: 1, trimestre: 1, enseignantId: 1, appreciation: 'Excellente élève, très motivée.' },
+  { eleveId: 3, matiereId: 2, trimestre: 1, enseignantId: 2, appreciation: 'Très bonne maîtrise de la langue française.' },
+];

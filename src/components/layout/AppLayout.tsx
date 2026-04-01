@@ -9,42 +9,42 @@ import {
   Search, Bell, ChevronDown, UserCircle, ChevronRight, Briefcase,
   Sun, Moon, PanelLeftClose, PanelLeft, Calendar
 } from 'lucide-react';
-import { notifications as notifData } from '../../data/mockData';
+import { notifications as notifData, messages as msgData } from '../../data/mockData';
 import SearchResults from '../ui/SearchResults';
 import Toast from '../ui/Toast';
 
 const menuItems = [
   { section: 'PRINCIPAL', items: [
-    { label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire', 'Enseignant', 'Parent', 'Élève'] },
+    { label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard', module: 'dashboard' },
   ]},
   { section: 'ERP SCOLAIRE', items: [
-    { label: 'Établissements', icon: Building2, path: '/erp/etablissements', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire'] },
-    { label: 'Élèves', icon: GraduationCap, path: '/erp/eleves', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire', 'Enseignant'] },
-    { label: 'Familles', icon: Users, path: '/erp/familles', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire'] },
-    { label: 'Personnel', icon: Briefcase, path: '/erp/personnel', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire'] },
-    { label: 'Classes', icon: School, path: '/erp/classes', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire', 'Enseignant'] },
+    { label: 'Établissements', icon: Building2, path: '/erp/etablissements', module: 'erp' },
+    { label: 'Élèves', icon: GraduationCap, path: '/erp/eleves', module: 'erp' },
+    { label: 'Familles', icon: Users, path: '/erp/familles', module: 'erp' },
+    { label: 'Personnel', icon: Briefcase, path: '/erp/personnel', module: 'erp' },
+    { label: 'Classes', icon: School, path: '/erp/classes', module: 'erp' },
   ]},
   { section: 'ACADÉMIQUE', items: [
-    { label: 'Emploi du temps', icon: CalendarDays, path: '/academique/emploi-du-temps', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Enseignant', 'Élève', 'Parent'] },
-    { label: 'Appel & Absences', icon: ClipboardCheck, path: '/academique/appel', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Enseignant', 'Administration Scolaire'] },
-    { label: 'Notes & Bulletins', icon: FileText, path: '/academique/notes', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Enseignant', 'Parent', 'Élève'] },
-    { label: 'Cahier de texte', icon: BookOpen, path: '/academique/cahier-texte', roles: ['Enseignant', 'Parent', 'Élève', 'Directeur d\'Établissement'] },
-    { label: 'Calendrier scolaire', icon: Calendar, path: '/academique/calendrier', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Enseignant', 'Administration Scolaire', 'Parent', 'Élève'] },
-    { label: 'Conseils de classe', icon: ClipboardCheck, path: '/academique/conseils-classe', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Enseignant', 'Administration Scolaire'] },
+    { label: 'Emploi du temps', icon: CalendarDays, path: '/academique/emploi-du-temps', module: 'academique' },
+    { label: 'Appel & Absences', icon: ClipboardCheck, path: '/academique/appel', module: 'academique' },
+    { label: 'Notes & Bulletins', icon: FileText, path: '/academique/notes', module: 'academique' },
+    { label: 'Cahier de texte', icon: BookOpen, path: '/academique/cahier-texte', module: 'academique' },
+    { label: 'Calendrier scolaire', icon: Calendar, path: '/academique/calendrier', module: 'academique' },
+    { label: 'Conseils de classe', icon: ClipboardCheck, path: '/academique/conseils-classe', module: 'academique' },
   ]},
   { section: 'GESTION', items: [
-    { label: 'Finance', icon: DollarSign, path: '/finance', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire', 'Parent'] },
-    { label: 'Documents (GED)', icon: FolderOpen, path: '/ged', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire', 'Enseignant'] },
-    { label: 'Communication', icon: MessageSquare, path: '/communication', badge: 3, roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire', 'Enseignant', 'Parent', 'Élève'] },
-    { label: 'Admissions', icon: UserPlus, path: '/admissions', roles: ['Direction Générale', 'Directeur d\'Établissement', 'Administration Scolaire'] },
+    { label: 'Finance', icon: DollarSign, path: '/finance', module: 'finance' },
+    { label: 'Documents (GED)', icon: FolderOpen, path: '/ged', module: 'ged' },
+    { label: 'Communication', icon: MessageSquare, path: '/communication', module: 'communication' },
+    { label: 'Admissions', icon: UserPlus, path: '/admissions', module: 'admissions' },
   ]},
   { section: 'PILOTAGE', items: [
-    { label: 'Tableaux de bord', icon: BarChart3, path: '/tableaux-de-bord', roles: ['Direction Générale', 'Directeur d\'Établissement'] },
+    { label: 'Tableaux de bord', icon: BarChart3, path: '/tableaux-de-bord', module: 'tableaux-de-bord' },
   ]},
 ];
 
 export default function AppLayout() {
-  const { user, logout } = useAuth();
+  const { user, logout, canAccessModule } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,6 +57,7 @@ export default function AppLayout() {
   const searchRef = useRef<HTMLDivElement>(null);
 
   const unreadNotifs = notifData.filter(n => !n.lu).length;
+  const unreadMessages = msgData.filter(m => !m.lu).length;
 
   // Close search results when clicking outside
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function AppLayout() {
 
   const filteredMenu = menuItems.map(section => ({
     ...section,
-    items: section.items.filter(item => item.roles.includes(user?.role))
+    items: section.items.filter(item => canAccessModule(item.module))
   })).filter(section => section.items.length > 0);
 
   return (
@@ -101,6 +102,7 @@ export default function AppLayout() {
             <div className="sidebar-user-info">
               <div className="sidebar-user-name">{user?.prenom} {user?.nom}</div>
               <div className="sidebar-user-role">{user?.role}</div>
+              <span className="sidebar-role-badge">{user?.role}</span>
             </div>
           </div>
         )}
@@ -119,7 +121,9 @@ export default function AppLayout() {
                 >
                   <item.icon size={18} />
                   {!collapsed && <span>{item.label}</span>}
-                  {!collapsed && item.badge && <span className="sidebar-nav-badge">{item.badge}</span>}
+                  {!collapsed && item.module === 'communication' && unreadMessages > 0 && (
+                    <span className="sidebar-nav-badge">{unreadMessages}</span>
+                  )}
                 </Link>
               ))}
             </div>
@@ -127,10 +131,12 @@ export default function AppLayout() {
         </nav>
 
         <div className="sidebar-footer">
-          <Link to="/parametres" className="sidebar-nav-item" onClick={() => setMobileOpen(false)} title={collapsed ? 'Paramètres' : undefined}>
-            <Settings size={18} />
-            {!collapsed && <span>Paramètres</span>}
-          </Link>
+          {canAccessModule('parametres') && (
+            <Link to="/parametres" className="sidebar-nav-item" onClick={() => setMobileOpen(false)} title={collapsed ? 'Paramètres' : undefined}>
+              <Settings size={18} />
+              {!collapsed && <span>Paramètres</span>}
+            </Link>
+          )}
           <div className="sidebar-nav-item" onClick={handleLogout} style={{ cursor: 'pointer' }} title={collapsed ? 'Déconnexion' : undefined}>
             <LogOut size={18} />
             {!collapsed && <span>Déconnexion</span>}

@@ -133,6 +133,38 @@ export default function AccueilPublic() {
         </div>
       </section>
 
+      {/* Galerie — Vie scolaire */}
+      <section style={{ background: '#f8fafc', padding: '72px 80px' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <h2 style={{ fontSize: '34px', fontWeight: 900, color: '#1e3a5f', marginBottom: '10px', letterSpacing: '-0.5px' }}>Galerie — Vie scolaire</h2>
+            <p style={{ color: '#64748b', fontSize: '16px' }}>Découvrez le quotidien de nos élèves en images</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+            {[
+              { titre: 'Tournoi de football inter-écoles', categorie: 'Sports', gradient: 'linear-gradient(135deg, #10b981, #059669)', emoji: '⚽' },
+              { titre: 'Atelier peinture CE2', categorie: 'Arts', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', emoji: '🎨' },
+              { titre: 'Expérience de chimie CM1', categorie: 'Sciences', gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)', emoji: '🔬' },
+              { titre: 'Fête de fin de trimestre', categorie: 'Événements', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)', emoji: '🎉' },
+              { titre: 'Course de relais annuelle', categorie: 'Sports', gradient: 'linear-gradient(135deg, #14b8a6, #0d9488)', emoji: '🏃' },
+              { titre: 'Chorale de Noël', categorie: 'Arts', gradient: 'linear-gradient(135deg, #ec4899, #db2777)', emoji: '🎵' },
+              { titre: 'Jardin pédagogique', categorie: 'Sciences', gradient: 'linear-gradient(135deg, #22c55e, #16a34a)', emoji: '🌱' },
+              { titre: 'Cérémonie des prix', categorie: 'Événements', gradient: 'linear-gradient(135deg, #f4a623, #e65100)', emoji: '🏆' },
+            ].map((item, i) => (
+              <div key={i} className="card" style={{ overflow: 'hidden', cursor: 'pointer', transition: 'all 0.3s ease' }}>
+                <div style={{ height: '160px', background: item.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ fontSize: '48px', opacity: 0.7 }}>{item.emoji}</div>
+                </div>
+                <div className="card-body" style={{ padding: '14px 16px' }}>
+                  <span className="badge badge-secondary" style={{ fontSize: '10px', marginBottom: '6px', display: 'inline-block' }}>{item.categorie}</span>
+                  <h4 style={{ fontSize: '14px', fontWeight: 700, color: '#2c3e50', lineHeight: 1.4 }}>{item.titre}</h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section style={{ background: 'linear-gradient(135deg, #0f2137 0%, #1e3a5f 50%, #2d5a8e 100%)', padding: '72px 80px', textAlign: 'center', color: 'white', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(ellipse at 20% 50%, rgba(244,166,35,0.1) 0%, transparent 50%)', pointerEvents: 'none' }} />

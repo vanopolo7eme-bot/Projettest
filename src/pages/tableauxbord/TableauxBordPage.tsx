@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { etablissements, eleves, factures, absences } from '../../data/mockData';
 import StatCard from '../../components/ui/StatCard';
-import { BarChart3, Users, DollarSign, AlertTriangle, TrendingUp, Award, Building2 } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend } from 'recharts';
+import { BarChart3, Users, DollarSign, AlertTriangle, TrendingUp, Award, Building2, Calendar } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend, LineChart, Line } from 'recharts';
 
 export default function TableauxBordPage() {
+  const [periodeVue, setPeriodeVue] = useState<1 | 2 | 3>(1);
   const kpis = etablissements.map(e => ({
     nom: e.nom.replace('École Primaire ', '').replace("Lycée d'Excellence ", ''),
     effectif: e.effectif,
@@ -27,17 +28,47 @@ export default function TableauxBordPage() {
   const totalFacture = factures.reduce((s, f) => s + f.montant, 0);
   const totalPaye = factures.reduce((s, f) => s + f.paye, 0);
 
+  // Multi-year mock data for trend charts
+  const evolutionData = useMemo(() => {
+    const currentYear = 2026;
+    const years: { annee: string; effectif: number; CA: number; recouvrement: number; moyGenerale: number }[] = [];
+    for (let i = periodeVue - 1; i >= 0; i--) {
+      const y = currentYear - i;
+      const factor = 1 - i * 0.08;
+      years.push({
+        annee: `${y - 1}-${y}`,
+        effectif: Math.round(totalEleves * factor),
+        CA: Math.round((totalFacture / 1000000) * factor),
+        recouvrement: Math.round(((totalPaye / totalFacture) * 100) * (1 - i * 0.03)),
+        moyGenerale: parseFloat((13.2 - i * 0.4).toFixed(1)),
+      });
+    }
+    return years;
+  }, [periodeVue, totalEleves, totalFacture, totalPaye]);
+
   return (
     <div className="fade-in">
       <div className="page-header">
         <div>
           <div className="breadcrumb"><span>Pilotage</span><span className="breadcrumb-sep">/</span><span>Tableaux de bord</span></div>
-          <h1 className="page-title">Tableaux de Bord Stratégiques</h1>
-          <p className="page-subtitle">Vue consolidée — Direction Générale</p>
+          <h1 className="page-title">Tableaux de Bord Strategiques</h1>
+          <p className="page-subtitle">Vue consolidee -- Direction Generale</p>
         </div>
-        <div className="page-actions">
-          <button className="btn btn-secondary">📥 Exporter PDF</button>
-          <button className="btn btn-secondary">📊 Exporter Excel</button>
+        <div className="page-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: '#f1f5f9', borderRadius: '8px', padding: '4px' }}>
+            {([1, 2, 3] as const).map(n => (
+              <button
+                key={n}
+                className={`btn btn-sm ${periodeVue === n ? 'btn-primary' : 'btn-ghost'}`}
+                onClick={() => setPeriodeVue(n)}
+                style={{ minWidth: '60px' }}
+              >
+                <Calendar size={14} style={{ marginRight: '4px' }} />{n} an{n > 1 ? 's' : ''}
+              </button>
+            ))}
+          </div>
+          <button className="btn btn-secondary">Exporter PDF</button>
+          <button className="btn btn-secondary">Exporter Excel</button>
         </div>
       </div>
 
@@ -123,6 +154,45 @@ export default function TableauxBordPage() {
           </div>
         </div>
       </div>
+
+      {/* Evolution pluriannuelle */}
+      {periodeVue > 1 && (
+        <div className="grid-2 mb-24">
+          <div className="card">
+            <div className="card-header"><div className="card-title">Evolution des effectifs et du CA ({periodeVue} ans)</div></div>
+            <div className="card-body">
+              <ResponsiveContainer width="100%" height={260}>
+                <BarChart data={evolutionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f4f8" />
+                  <XAxis dataKey="annee" tick={{ fontSize: 11 }} />
+                  <YAxis yAxisId="left" tick={{ fontSize: 11 }} />
+                  <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11 }} />
+                  <Tooltip />
+                  <Legend />
+                  <Bar yAxisId="left" dataKey="effectif" name="Effectif" fill="#1e3a5f" radius={[4, 4, 0, 0]} />
+                  <Bar yAxisId="right" dataKey="CA" name="CA (M FCFA)" fill="#27ae60" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-header"><div className="card-title">Tendance recouvrement et moyenne ({periodeVue} ans)</div></div>
+            <div className="card-body">
+              <ResponsiveContainer width="100%" height={260}>
+                <LineChart data={evolutionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f4f8" />
+                  <XAxis dataKey="annee" tick={{ fontSize: 11 }} />
+                  <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="recouvrement" name="Recouvrement (%)" stroke="#3498db" strokeWidth={2} dot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="moyGenerale" name="Moy. generale (/20)" stroke="#f4a623" strokeWidth={2} dot={{ r: 4 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Alertes KPI */}
       <div className="card">

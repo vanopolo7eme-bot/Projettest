@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import DataTable from '../../components/ui/DataTable';
 import Modal from '../../components/ui/Modal';
 import { admissions as initialAdmissions, etablissements, classes } from '../../data/mockData';
-import { UserPlus, Eye, Check, X, Clock, FileText, Save, TrendingUp, Users, CheckCircle, AlertCircle } from 'lucide-react';
+import { UserPlus, Eye, Check, X, Clock, FileText, Save, TrendingUp, Users, CheckCircle, AlertCircle, Building2 } from 'lucide-react';
 import { useToast } from '../../contexts/ToastContext';
 import ExportDropdown from '../../components/ui/ExportDropdown';
 
@@ -29,8 +29,21 @@ export default function AdmissionsPage() {
     const enCours = admissionsList.filter(a => !['Accepté', 'Refusé'].includes(a.statut)).length;
     const acceptes = admissionsList.filter(a => a.statut === 'Accepté').length;
     const conversion = total > 0 ? Math.round((acceptes / total) * 100) : 0;
-    return { total, enCours, acceptes, conversion };
+    const capaciteTotale = etablissements.reduce((s, e) => s + e.capacite, 0);
+    const effectifTotal = etablissements.reduce((s, e) => s + e.effectif, 0);
+    const capaciteDisponible = capaciteTotale - effectifTotal;
+    return { total, enCours, acceptes, conversion, capaciteDisponible };
   }, [admissionsList]);
+
+  const capaciteParEtablissement = useMemo(() => {
+    return etablissements.map(e => ({
+      nom: e.nom,
+      disponible: e.capacite - e.effectif,
+      capacite: e.capacite,
+      effectif: e.effectif,
+      taux: Math.round((e.effectif / e.capacite) * 100),
+    }));
+  }, []);
 
   const handleCreateAdmission = (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,7 +120,7 @@ export default function AdmissionsPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid-4 mb-24">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px', marginBottom: '24px' }}>
         <div className="stat-card">
           <div className="stat-card-header">
             <div style={{ width: '40px', height: '40px', borderRadius: '8px', background: '#e8f0fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1e3a5f' }}>
@@ -133,7 +146,7 @@ export default function AdmissionsPage() {
             </div>
           </div>
           <div className="stat-card-value" style={{ color: '#27ae60' }}>{stats.acceptes}</div>
-          <div className="stat-card-label">Acceptés</div>
+          <div className="stat-card-label">Acceptes</div>
         </div>
         <div className="stat-card">
           <div className="stat-card-header">
@@ -143,6 +156,43 @@ export default function AdmissionsPage() {
           </div>
           <div className="stat-card-value" style={{ color: '#3b82f6' }}>{stats.conversion}%</div>
           <div className="stat-card-label">Taux conversion</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-card-header">
+            <div style={{ width: '40px', height: '40px', borderRadius: '8px', background: '#fce7f3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9333ea' }}>
+              <Building2 size={20} />
+            </div>
+          </div>
+          <div className="stat-card-value" style={{ color: '#9333ea' }}>{stats.capaciteDisponible}</div>
+          <div className="stat-card-label">Capacite disponible</div>
+        </div>
+      </div>
+
+      {/* Capacite par etablissement */}
+      <div className="card mb-24">
+        <div className="card-header">
+          <div className="card-title"><Building2 size={16} style={{ verticalAlign: 'text-bottom', marginRight: '6px' }} />Capacite d'accueil par etablissement</div>
+        </div>
+        <div className="card-body" style={{ padding: 0 }}>
+          {capaciteParEtablissement.map((etab, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '14px 20px', borderBottom: i < capaciteParEtablissement.length - 1 ? '1px solid #f0f4f8' : 'none' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>{etab.nom}</div>
+                <div style={{ fontSize: '12px', color: '#6b7280' }}>
+                  {etab.effectif} inscrits / {etab.capacite} places — <strong style={{ color: etab.disponible < 50 ? '#ef4444' : '#16a34a' }}>{etab.disponible} places disponibles</strong>
+                </div>
+              </div>
+              <div style={{ width: '120px' }}>
+                <div className="progress" style={{ height: '8px', marginBottom: '4px' }}>
+                  <div
+                    className={`progress-bar ${etab.taux > 90 ? 'progress-danger' : etab.taux > 75 ? 'progress-warning' : 'progress-primary'}`}
+                    style={{ width: `${etab.taux}%` }}
+                  />
+                </div>
+                <div style={{ fontSize: '11px', textAlign: 'center', color: '#6b7280' }}>{etab.taux}%</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

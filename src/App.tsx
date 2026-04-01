@@ -50,6 +50,8 @@ import NosEtablissementsPage from './pages/public/NosEtablissementsPage';
 import ActualitesPage from './pages/public/ActualitesPage';
 import ContactPage from './pages/public/ContactPage';
 import FaqPage from './pages/public/FaqPage';
+import ReinscriptionPage from './pages/public/ReinscriptionPage';
+import EtablissementDetailPage from './pages/public/EtablissementDetailPage';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -64,9 +66,11 @@ function AppRoutes() {
         <Route path="/" element={<AccueilPublic />} />
         <Route path="/preinscription" element={<PreinscriptionPage />} />
         <Route path="/nos-etablissements" element={<NosEtablissementsPage />} />
+        <Route path="/nos-etablissements/:id" element={<EtablissementDetailPage />} />
         <Route path="/actualites" element={<ActualitesPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/faq" element={<FaqPage />} />
+        <Route path="/reinscription" element={<ReinscriptionPage />} />
       </Route>
 
       {/* Login */}
